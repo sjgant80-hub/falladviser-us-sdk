@@ -1,0 +1,24 @@
+{
+  "name": "@ai-native-solutions/falladviser-us-sdk",
+  "version": "1.0.0",
+  "description": "falladviser-us SDK · sovereign single-file library extracted from falladviser-us/index.html",
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "files": ["src", "docs", "README.md", "LICENSE"],
+  "scripts": {
+    "test": "node --test test/",
+    "smoke": "node examples/smoke.js"
+  },
+  "keywords": ["falladviser-us", "sdk", "sovereign", "ai-native-solutions"],
+  "author": "AI-Native Solutions",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sjgant80-hub/falladviser-us-sdk.git"
+  },
+  "homepage": "https://sjgant80-hub.github.io/falladviser-us-sdk/",
+  "publishConfig": {
+    "access": "public"
+  }
+}
