@@ -1,5 +1,5 @@
 // falladviser-us SDK · sovereign single-file library · MIT · AI-Native Solutions
-// Extracted from falladviser-us/index.html · 97099 bytes of source logic
+// Extracted from falladviser-us/index.html · 98097 bytes of source logic
 // Public-safe: no primes/glyphs/dyad references
 
 /*!
@@ -1428,6 +1428,20 @@ try{const sig=new BroadcastChannel('fall-signal');sig.postMessage({source:'falla
  e.source?.postMessage({target:m.source||'*',responseTo:m.action,data:r},'*')});
 // ── boot ──
 (async function(){await openDB();await loadAll();await updateTierBadge();await loadEstateContext();if(!state.active||!TABS.find(t=>t.id===state.active))state.active='dashboard';render();})();
+  try {
+    const { installAutopilot } = await import('https://sjgant80-hub.github.io/fall-autopilot-kit/src/autopilot.js');
+    const manifestRes = await fetch('https://sjgant80-hub.github.io/fall-autopilot-kit/manifests/falladviser-us.json');
+    const manifest = await manifestRes.json();
+    // Wire actions to stub run functions (each tool implements its own; missing ones alert the user)
+    manifest.actions = manifest.actions.map(a => ({ ...a, run: async (params) => {
+      const fn = window._app?.[a.id];
+      if (typeof fn === 'function') return fn(params);
+      alert('Autopilot proposes: ' + a.name + ' · params: ' + JSON.stringify(params) + '\n\nThis tool has not yet implemented the ' + a.id + ' handler. Proposal logged to audit.');
+      return { stub: true, action: a.id, params };
+    }}));
+    manifest.state = () => ({ ...(window._app || {}), now: new Date().toISOString() });
+    installAutopilot(manifest);
+  } catch (e) { console.warn('[autopilot] init failed:', e); }
 
 // Named exports for the primary API surface
 export { loadConfig };
